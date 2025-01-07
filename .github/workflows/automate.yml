@@ -1,34 +1,26 @@
-name: Deploy Remotely
+name: Copy File to Remote Server
 
 on:
   push:
-    branches: [ main ]
- 
+    branches:
+      - main
+
 jobs:
-  Deploy-Remotely:
+  deploy:
     runs-on: ubuntu-latest
+
+    env:
+      SERVER_IP: ${{ secrets.SERVER_IP }}
+      SERVER_USER: ${{ secrets.SERVER_USER }}
+      SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+
     steps:
-    - uses: actions/checkout@v2
-    
-    # Set up Node.js 20.x to build your app
-    - name: Use Node.js 20.x to Build
-      uses: actions/setup-node@v2
-      with:
-        node-version: 20.x
-    
-    - run: npm install
-    - run: CI=false npm run build
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-    # Install sshpass for password-based SSH authentication
-    - name: Install sshpass
-      run: sudo apt-get install -y sshpass
+      - name: Install sshpass
+        run: sudo apt-get update && sudo apt-get install -y sshpass
 
-    # Deploy to the remote server using SSH with password
-    - name: Transfer Build Folder on EC2 Instance
-      run: |
-        sshpass -p ${{ secrets.DEPLOY_PASSWORD }} scp -r build/ ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_TARGET }}
-      env:
-        DEPLOY_PASSWORD: ${{ secrets.DEPLOY_PASSWORD }}
-        DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
-        DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
-        DEPLOY_TARGET: ${{ secrets.DEPLOY_TARGET }}
+      - name: Copy Testing.txt to Remote Server
+        run: |
+          sshpass -p "$SERVER_PASSWORD" scp -o StrictHostKeyChecking=no Testing.txt $SERVER_USER@$SERVER_IP:/var/www/html/test/
