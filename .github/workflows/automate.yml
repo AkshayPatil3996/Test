@@ -23,6 +23,6 @@ jobs:
 
       - name: Copy Testing.txt to Remote Server
         run: |
-          sudo sshpass -p "$SERVER_PASSWORD" scp -o StrictHostKeyChecking=no spering-html/* $SERVER_USER@$SERVER_IP:/var/www/html/
+          sudo sshpass -p "$SERVER_PASSWORD" scp -o StrictHostKeyChecking=no spering-html/* $SERVER_USER@$SERVER_IP:/var/www/html
           sudo systemctl restart nginx
           
