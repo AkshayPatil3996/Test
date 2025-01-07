@@ -1,39 +1,34 @@
-name: SSH and Copy File
+name: Deploy Remotely
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-  workflow_dispatch:
-
+    branches: [ main ]
+ 
 jobs:
-  copy-file:
+  Deploy-Remotely:
     runs-on: ubuntu-latest
-    env:
-      SERVER_IP: ${{ secrets.SERVER_IP }}
-      SERVER_USER: ${{ secrets.SERVER_USER }}
-      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-    
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+    - uses: actions/checkout@v2
+    
+    # Set up Node.js 20.x to build your app
+    - name: Use Node.js 20.x to Build
+      uses: actions/setup-node@v2
+      with:
+        node-version: 20.x
+    
+    - run: npm install
+    - run: CI=false npm run build
 
-      - name: Setup SSH Key
-        run: |
-          echo "$SSH_PRIVATE_KEY" > private_key.pem
-          chmod 600 private_key.pem
-      
-      - name: Copy File to Remote Server
-        run: |
-          scp -i private_key.pem -o StrictHostKeyChecking=no Testing.txt $SERVER_USER@$SERVER_IP:/tmp/
-      
-      - name: Move File to Root Directory on Remote Server
-        run: |
-          ssh -i private_key.pem -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP << 'EOF'
-          sudo mv /tmp/Testing.txt /
-          EOF
-      
-      - name: Clean Up
-        run: |
-          rm -f private_key.pem
+    # Install sshpass for password-based SSH authentication
+    - name: Install sshpass
+      run: sudo apt-get install -y sshpass
+
+    # Deploy to the remote server using SSH with password
+    - name: Transfer Build Folder on EC2 Instance
+      run: |
+        sshpass -p ${{ secrets.DEPLOY_PASSWORD }} scp -r build/ ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_TARGET }}
+      env:
+        DEPLOY_PASSWORD: ${{ secrets.DEPLOY_PASSWORD }}
+        DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+        DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+        DEPLOY_TARGET: ${{ secrets.DEPLOY_TARGET }}
