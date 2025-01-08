@@ -1,4 +1,4 @@
-name: Copy File to Remote Server
+name: Copy Files to Remote Server
 
 on:
   push:
@@ -13,6 +13,7 @@ jobs:
       SERVER_IP: ${{ secrets.SERVER_IP }}
       SERVER_USER: ${{ secrets.SERVER_USER }}
       SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+      TARGET_PATH: ${{ secrets.TARGET_PATH }} # Specify target path as a secret
 
     steps:
       - name: Checkout Code
@@ -21,8 +22,7 @@ jobs:
       - name: Install sshpass
         run: sudo apt-get update && sudo apt-get install -y sshpass
 
-      - name: Copy Testing.txt to Remote Server
+      - name: Copy All Files from Main Repo to Remote Server
         run: |
-          sudo sshpass -p "$SERVER_PASSWORD" scp -r -o StrictHostKeyChecking=no spering-html/* $SERVER_USER@$SERVER_IP:/var/www/html
-          sudo systemctl restart nginx
-          
+          sudo sshpass -p "$SERVER_PASSWORD" scp -r -o StrictHostKeyChecking=no ./ $SERVER_USER@$SERVER_IP:$TARGET_PATH
+          sudo sshpass -p "$SERVER_PASSWORD" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "sudo systemctl restart nginx"
