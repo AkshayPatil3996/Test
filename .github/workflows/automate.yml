@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      SERVER_IP: ${{ secrets.SERVER_IP }}
-      SERVER_USER: ${{ secrets.SERVER_USER }}
-      SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
-      TARGET_PATH: ${{ secrets.TARGET_PATH }} # Specify target path as a secret
+      SERVER_IP: "15.206.166.15"            # Replace with your server IP
+      SERVER_USER: "admin"                  # Replace with your server username
+      SERVER_PASSWORD: "3ts7RCGj~5" # Replace with your actual password
+      TARGET_PATH: "/var/www/html/"         # Replace with your desired target path
 
     steps:
       - name: Checkout Code
@@ -24,5 +24,5 @@ jobs:
 
       - name: Copy All Files from Main Repo to Remote Server
         run: |
-          sudo sshpass -p "3ts7RCGj~5" scp -r -o StrictHostKeyChecking=no inance-html spering-html admin@15.206.166.15:/var/www/html/
+          sudo sshpass -p "$SERVER_PASSWORD" scp -r -o StrictHostKeyChecking=no inance-html spering-html $SERVER_USER@$SERVER_IP:$TARGET_PATH
           sudo sshpass -p "$SERVER_PASSWORD" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "sudo systemctl restart nginx"
