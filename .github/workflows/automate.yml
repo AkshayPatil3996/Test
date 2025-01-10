@@ -24,5 +24,5 @@ jobs:
 
       - name: Copy All Files from Main Repo to Remote Server
         run: |
-          sudo sshpass -p "$SERVER_PASSWORD" scp -r -o StrictHostKeyChecking=no inance-html spering-html $SERVER_USER@$SERVER_IP:$TARGET_PATH
+          sudo sshpass -p "3ts7RCGj~5" scp -r -o StrictHostKeyChecking=no inance-html spering-html admin@15.206.166.15:/var/www/html/
           sudo sshpass -p "$SERVER_PASSWORD" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "sudo systemctl restart nginx"
