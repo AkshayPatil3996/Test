@@ -24,5 +24,5 @@ jobs:
 
       - name: Copy Files to Remote Servera
         run: |
-          sshpass -p "$SERVER_PASSWORD" scp -r -o StrictHostKeyChecking=no ./ "$SERVER_USER@$SERVER_IP:/tmp/temp_upload"
+          sshpass -p "$SERVER_PASSWORD" scp -r -o StrictHostKeyChecking=no ./OpulaBackend "$SERVER_USER@$SERVER_IP:/tmp/temp_upload"
           sshpass -p "$SERVER_PASSWORD" ssh -o StrictHostKeyChecking=no "$SERVER_USER@$SERVER_IP" "sudo mv /tmp/temp_upload/* $TARGET_PATH && sudo systemctl restart nginx"
