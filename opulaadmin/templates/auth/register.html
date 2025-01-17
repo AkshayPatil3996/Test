@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Admin Registration {% endblock title %}
+{% block main-content %}
+
+<!-- Multi Column with Form Separator -->
+<div class="card mb-4">
+  <h5 class="card-header">Registration of Admin</h5>
+  <form method="POST" action="{% url 'admin_register' %}" class="card-body">
+    {% csrf_token %}
+    <h6>Create Admin</h6>
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label" for="first_name">First Name</label>
+        <input type="text" name="first_name" class="form-control" value="{{ form.first_name.value }}" />
+        {% if form.first_name.errors %}
+          <div class="text-danger">
+            {% for error in form.first_name.errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="last_name">Last Name</label>
+        <input type="text" name="last_name" class="form-control" value="{{ form.last_name.value }}" />
+        {% if form.last_name.errors %}
+          <div class="text-danger">
+            {% for error in form.last_name.errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="email">Email</label>
+        <input type="email" name="email" class="form-control" value="{{ form.email.value }}" />
+        {% if form.email.errors %}
+          <div class="text-danger">
+            {% for error in form.email.errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="am_mobile_no">Mobile No.</label>
+        <input type="text" name="am_mobile_no" class="form-control" value="{{ form.am_mobile_no.value }}" />
+        {% if form.am_mobile_no.errors %}
+          <div class="text-danger">
+            {% for error in form.am_mobile_no.errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="password">Password</label>
+        <div class="input-group input-group-merge">
+          <input type="password" name="password" id="password" class="form-control" />
+          <span class="input-group-text cursor-pointer" id="toggle-password" onclick="togglePasswordVisibility()">
+            <i class="ti ti-eye-off" id="password-eye-icon"></i>
+          </span>
+        </div>
+        {% if form.password.errors %}
+          <div class="text-danger">
+            {% for error in form.password.errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="confirm_password">Confirm Password</label>
+        <div class="input-group input-group-merge">
+          <input type="password" name="confirm_password" id="confirm-password" class="form-control" />
+          <span class="input-group-text cursor-pointer" id="toggle-confirm-password" onclick="toggleConfirmPasswordVisibility()">
+            <i class="ti ti-eye-off" id="confirm-password-eye-icon"></i>
+          </span>
+        </div>
+        {% if form.confirm_password.errors %}
+          <div class="text-danger">
+            {% for error in form.confirm_password.errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+    </div>
+    
+    <div class="pt-4">
+      <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
+      <!-- <button type="reset" class="btn btn-label-secondary">Cancel</button> -->
+    </div>
+  </form>
+</div>
+
+
+
+
+
+{% endblock main-content %}
+
+{% block javascript %}
+<script>
+  // Toggle password visibility
+  function togglePasswordVisibility() {
+    var passwordField = document.getElementById('password');
+    var eyeIcon = document.getElementById('password-eye-icon');
+    
+    if (passwordField.type === "password") {
+      passwordField.type = "text";
+      eyeIcon.classList.remove("ti-eye-off");
+      eyeIcon.classList.add("ti-eye");
+    } else {
+      passwordField.type = "password";
+      eyeIcon.classList.remove("ti-eye");
+      eyeIcon.classList.add("ti-eye-off");
+    }
+  }
+
+  // Toggle confirm password visibility
+  function toggleConfirmPasswordVisibility() {
+    var confirmPasswordField = document.getElementById('confirm-password');
+    var eyeIcon = document.getElementById('confirm-password-eye-icon');
+    
+    if (confirmPasswordField.type === "password") {
+      confirmPasswordField.type = "text";
+      eyeIcon.classList.remove("ti-eye-off");
+      eyeIcon.classList.add("ti-eye");
+    } else {
+      confirmPasswordField.type = "password";
+      eyeIcon.classList.remove("ti-eye");
+      eyeIcon.classList.add("ti-eye-off");
+    }
+  }
+</script>
+
+{% if messages %}
+  <script>
+    {% for message in messages %}
+      {% if message.tags == "error" %}
+        toastr.error("{{ message }}", "Error", { timeOut: 5000 });
+      {% elif message.tags == "success" %}
+        toastr.success("{{ message }}", "Success", { timeOut: 5000 });
+      {% endif %}
+    {% endfor %}
+  </script>
+{% endif %}
+
+
+<script>
+ 
+  toastr.options = {
+    "closeButton": true,
+    "progressBar": true,
+    "positionClass": "toast-top-right",
+    "timeOut": "5000",
+  };
+</script>
+
+
+{% endblock javascript %}
+
+
+
+
+
+

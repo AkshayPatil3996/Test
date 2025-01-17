@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} {% endblock title %}
+{% block main-content %}
+
+<style>
+  .hover-effect {
+  transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transition */
+}
+
+/* On hover, change the background and move the card up */
+.hover-effect:hover {
+  transform: translateY(-10px); /* Slight upward movement */
+  background-color: #f0f0f0; /* Change the background color on hover (light gray example) */
+}
+
+.card-body {
+  transition: background-color 0.3s ease;
+}
+
+/* Optional: You can add background color change for card body itself */
+.hover-effect:hover .card-body {
+  background-color: #fafafa; /* Light background color on hover */
+}
+
+/* Optional: Adding a box shadow on hover for extra effect */
+.hover-effect:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+</style>
+
+
+<h4 class="py-3 mb-4">
+    <span class="text-muted fw-light">Tenant Manage/</span> {{data.email}} 
+</h4>
+
+<div class="row">
+    <div class="col-lg-3 col-sm-6 mb-4">
+        <div class="card h-100 hover-effect">
+     
+          <a href="{% url 'tenant_profile' pk=data.id %}">
+            <div class="card-body d-flex justify-content-between align-items-center">
+            <div class="card-title mb-0">
+              <small class="mb-0 me-2">86%</small>
+              <h5>Profile</h5>
+            </div>
+            <div class="card-icon">
+              <span class="badge bg-label-primary rounded-pill p-2">
+                <i class='ti ti-cpu ti-sm'></i>
+              </span>
+            </div>
+            </div>
+          </a>
+    
+        </div>
+      </div>
+      <div class="col-lg-3 col-sm-6 mb-4">
+        <div class="card h-100 hover-effect">
+          <div class="card-body d-flex justify-content-between align-items-center">
+            <div class="card-title mb-0">
+              <small class="mb-0 me-2">86%</small>
+              <h5>Dashboard</h5>
+            </div>
+            <div class="card-icon">
+              <span class="badge bg-label-success rounded-pill p-2">
+                <i class='ti ti-server ti-sm'></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-sm-6 mb-4">
+        <div class="card h-100 hover-effect">
+          <div class="card-body d-flex justify-content-between align-items-center">
+            <div class="card-title mb-0">
+              <small class="mb-0 me-2">86%</small>
+              <h5>Roles & Permission</h5>
+            </div>
+            <div class="card-icon">
+              <span class="badge bg-label-success rounded-pill p-2">
+                <i class='ti ti-server ti-sm'></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-sm-6 mb-4">
+        <div class="card h-100 hover-effect">
+          <div class="card-body d-flex justify-content-between align-items-center">
+            <div class="card-title mb-0">
+              <small class="mb-0 me-2">86%</small>
+              <h5>Object List</h5>
+            </div>
+            <div class="card-icon">
+              <span class="badge bg-label-danger rounded-pill p-2">
+                <i class='ti ti-chart-pie-2 ti-sm'></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-sm-6 mb-4">
+        <div class="card h-100 hover-effect">
+          <div class="card-body d-flex justify-content-between align-items-center">
+            <div class="card-title mb-0">
+              <small class="mb-0 me-2">86%</small>
+              <h5>Object Attribute List</h5>
+            </div>
+            <div class="card-icon">
+              <span class="badge bg-label-warning rounded-pill p-2">
+                <i class='ti ti-alert-octagon ti-sm'></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-sm-6 mb-4">
+        <div class="card h-100 hover-effect">
+          <div class="card-body d-flex justify-content-between align-items-center">
+            <div class="card-title mb-0">
+              <small class="mb-0 me-2">86%</small>
+              <h5>Visitor List</h5>
+            </div>
+            <div class="card-icon">
+              <span class="badge bg-label-danger rounded-pill p-2">
+                <i class='ti ti-chart-pie-2 ti-sm'></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-sm-6 mb-4">
+        <div class="card h-100 hover-effect">
+          <div class="card-body d-flex justify-content-between align-items-center">
+            <div class="card-title mb-0">
+              <small class="mb-0 me-2">86%</small>
+              <h5>Visitor Attribute List</h5>
+            </div>
+            <div class="card-icon">
+              <span class="badge bg-label-warning rounded-pill p-2">
+                <i class="ti ti-alert-octagon ti-sm"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+</div>
+
+{% endblock main-content %}
