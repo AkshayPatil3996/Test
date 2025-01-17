@@ -22,7 +22,7 @@ jobs:
       - name: Install sshpass
         run: sudo apt-get update && sudo apt-get install -y sshpass
 
-      - name: Copy Files to Remote Server
+      - name: Copy Files to Remote Servera
         run: |
           sshpass -p "$SERVER_PASSWORD" scp -r -o StrictHostKeyChecking=no ./ "$SERVER_USER@$SERVER_IP:$TARGET_PATH"
           sshpass -p "$SERVER_PASSWORD" ssh -o StrictHostKeyChecking=no "$SERVER_USER@$SERVER_IP" "sudo systemctl restart nginx"
