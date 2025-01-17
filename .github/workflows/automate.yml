@@ -13,7 +13,7 @@ jobs:
       SERVER_IP: ${{ secrets.SERVER_IP }}
       SERVER_USER: ${{ secrets.SERVER_USER }}
       SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
-      TARGET_PATH: "/var/www/html/test/"
+      TARGET_PATH: "/var/www/html/test2/"
 
     steps:
       - name: Checkout Code
